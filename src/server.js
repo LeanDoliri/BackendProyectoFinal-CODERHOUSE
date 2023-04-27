@@ -9,6 +9,7 @@ import { Server as Socket } from "socket.io";
 
 import config from "./config/config.js";
 import { apiProducts } from "./api/products.js";
+import authWebRouter from "./routes/auth.js";
 
 function createServer() {
     const app = express();
@@ -46,14 +47,11 @@ function createServer() {
     );
   
     /*----------- rutas -----------*/
-    // app.use(authWebRouter);
+    app.use(authWebRouter);
     // app.use(homeWebRouter);
     // app.use(cartWebRouter);
     // app.use(profileWebRouter);
     app.use('/apiProducts', apiProducts);
-    app.get('/', (req, res) =>{
-        res.send('server online')
-    })
   
     return {
       listen: (port) =>
