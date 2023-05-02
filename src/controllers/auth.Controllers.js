@@ -1,4 +1,4 @@
-import moment from "moment/moment.js";
+import moment from "moment";
 
 import { generateHashPassword } from "../utils/bcrypt/bcrypt.js";
 import { sendNewUserEmail } from "../utils/nodemailer/nodemailer.js";
@@ -61,3 +61,4 @@ export const postSignin = async (req, res) => {
         res.redirect("/login");
     }
 }
+

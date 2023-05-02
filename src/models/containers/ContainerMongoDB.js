@@ -57,11 +57,7 @@ class ContainerMongoDB {
   async update(id, newElem) {
     try {
       await this.conn.connect();
-
-      await this.coleccion.deleteOne({_id: id});
-      newElem._id = id;
-      const newElemSave = await this.save(newElem);
-      return newElemSave;
+      await this.coleccion.updateOne({_id: id}, { $set: newElem });
     } catch (error) {
       const objErr = new CustomError(500, 'Error update()', error);
       logger.error(objErr);

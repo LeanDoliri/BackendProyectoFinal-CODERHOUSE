@@ -7,19 +7,25 @@ import MongoStore from "connect-mongo";
 import { Server as HttpServer } from "http";
 import { Server as Socket } from "socket.io";
 
+import productsWs from "./routes/ws/home.js"
+import cartWs from "./routes/ws/cart.js"
+
 import config from "./config/config.js";
 import { apiProducts } from "./api/products.js";
 import authWebRouter from "./routes/auth.js";
+import homeWebRouter from "./routes/home.js";
+import profileWebRouter from "./routes/profile.js";
+import cartWebRouter from "./routes/cart.js";
 
 function createServer() {
     const app = express();
     const httpServer = new HttpServer(app);
     const io = new Socket(httpServer);
   
-    // io.on("connection", async (socket) => {
-    //   productsWs(socket);
-    //   cartWs(socket);
-    // });
+    io.on("connection", async (socket) => {
+      productsWs(socket);
+      cartWs(socket);
+    });
   
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
@@ -48,9 +54,9 @@ function createServer() {
   
     /*----------- rutas -----------*/
     app.use(authWebRouter);
-    // app.use(homeWebRouter);
-    // app.use(cartWebRouter);
-    // app.use(profileWebRouter);
+    app.use(homeWebRouter);
+    app.use(cartWebRouter);
+    app.use(profileWebRouter);
     app.use('/apiProducts', apiProducts);
   
     return {
