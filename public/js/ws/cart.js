@@ -26,7 +26,7 @@ function btnsDeleteCart() {
   for (let i = 0; i < btnDeleteCartProduct.length; i++) {
     btnDeleteCartProduct[i].addEventListener("click", async (e) => {
       const deleteProduct = {
-        cartID: userEmail,
+        userEmail: userEmail,
         productID: e.target.id,
       };
       await socket.emit("deleteProduct", deleteProduct);
@@ -53,15 +53,16 @@ socket.on("purchaseMade", () => {
 function makeCartItemsTable(items) {
   const html = items
     .map((item) => {
-      return `   <div id="pCart${item.id}" class="bg-light d-flex align-items-center m-3">
+      return `   <div id="pCart${item._id}" class="bg-light d-flex align-items-center m-3">
                     <div class="d-flex align-items-center">
                         <img src="${item.thumbnail}" class="image-fluid" width="10%">
                         <div class="p-3">
                             <h5 class="card-title">${item.product}</h5>
+                            <p class="card-text">Cantidad: ${item.qty}</p>
                             <p class="card-text">$ ${item.price}</p>
                         </div>
                     </div>
-                    <a id="${item.id}" class="btn btn-primary m-3 btnDeleteCartProduct">Eliminar</a>
+                    <a id="${item._id}" class="btn btn-primary m-3 btnDeleteCartProduct">Eliminar</a>
                 </div>`;
     })
     .join(" ");
@@ -69,7 +70,7 @@ function makeCartItemsTable(items) {
 }
 
 function makeTotalPrice(cartItems){
-  const cartTotal = cartItems.reduce((total, currentValue)=> total + currentValue.price, 0);
+  const cartTotal = cartItems.reduce((total, currentValue)=> total + currentValue.price * currentValue.qty, 0);
   return `  <div class="d-flex align-items-center m-3">
               <h3><strong>Total: </strong>$ ${parseFloat(cartTotal).toFixed(2)}</h3>
               <a id="btnPurchase" class="btn btn-success m-3">Comprar</a>

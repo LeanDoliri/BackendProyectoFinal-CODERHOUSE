@@ -32,10 +32,18 @@ export default async function configurarSocket(socket) {
       const cart = await getCart(addingProduct.userEmail);
       const product = await getProduct(addingProduct.productID);
 
-      await cart.items.push(product);
-      await cartApi.update(cart._id, {items: cart.items[0]});
+      const productInCar = cart.items.find(p => p._id == addingProduct.productID);
 
-      socket.emit("addedProduct", product);
+      if (productInCar !== undefined) {
+        productInCar.qty += 1;
+        await cartApi.update(cart._id, { items: cart.items });
+
+        socket.emit("addedProduct", product);
+      } else {
+        cart.items.push({...product._doc, qty: 1});
+        await cartApi.update(cart._id, { items: cart.items });
+        socket.emit("addedProduct", productWithQty);
+      }
     } catch (error) {
       logger.info(error);
     }

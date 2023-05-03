@@ -35,23 +35,11 @@ export default async function configurarSocket(socket) {
   // eliminar producto del carrito
   socket.on("deleteProduct", async (deleteProduct) => {
     try {
-      const cart = await getCart(deleteProduct.cartID);
-      const product = await getProduct(deleteProduct.productID);
-      const cartItems = cart.items;
+      const cart = await getCart(deleteProduct.userEmail);
+      const newCartItems = cart.items.filter(item => item._id != deleteProduct.productID);
 
-      const newCartItems = await cartItems.filter(
-        (item) => item.id !== product.id
-      );
-
-      const newCart = {
-        id: deleteProduct.cartID,
-        items: newCartItems,
-      };
-      await cartApi.update(newCart);
-
-      const updateCart = await getCart(newCart.id);
-      const updateCartItems = updateCart.items;
-      socket.emit("itemsCart", updateCartItems);
+      await cartApi.update(cart._id, {items: newCartItems});
+      socket.emit("itemsCart", newCartItems);
     } catch (error) {
       logger.info(error);
     }
