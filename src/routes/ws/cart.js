@@ -52,7 +52,6 @@ export default async function configurarSocket(socket) {
       const ordersDB = await ordersApi.getAll();
 
       const purchase = {
-        state: 'generada',
         numOfOrder: ordersDB.length + 1,
         email: userEmail,
         adress: client.direccion,

@@ -11,11 +11,11 @@ import productsWs from "./routes/ws/home.js"
 import cartWs from "./routes/ws/cart.js"
 
 import config from "./config/config.js";
-import { apiProducts } from "./api/products.js";
 import authWebRouter from "./routes/auth.js";
 import homeWebRouter from "./routes/home.js";
 import profileWebRouter from "./routes/profile.js";
 import cartWebRouter from "./routes/cart.js";
+import adimnWebRouter from "./routes/admin.js";
 
 function createServer() {
     const app = express();
@@ -57,7 +57,7 @@ function createServer() {
     app.use(homeWebRouter);
     app.use(cartWebRouter);
     app.use(profileWebRouter);
-    app.use('/apiProducts', apiProducts);
+    app.use(adimnWebRouter);
   
     return {
       listen: (port) =>
