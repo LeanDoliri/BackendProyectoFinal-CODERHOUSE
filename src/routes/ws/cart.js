@@ -55,17 +55,9 @@ export default async function configurarSocket(socket) {
       };
       const client = await getClient(userEmail);
 
-      sendAdminWppMessage(purchase);
       sendNewPurchaseEmail(client, purchase);
 
-      sendClientWppMessage(client);
-
-      const newCart = {
-        id: userEmail,
-        items: [],
-      };
-
-      await cartApi.update(newCart);
+      await cartApi.update(cart._id, {items: []});
       socket.emit("purchaseMade");
     } catch (error) {
       logger.info(error);
@@ -78,15 +70,6 @@ async function getCart(userEmail) {
     const cartsDB = await cartApi.getAll();
     const cart = cartsDB.find(cart => cart.email == userEmail);
     return cart;
-  } catch (error) {
-    logger.info(error);
-  }
-}
-
-async function getProduct(productID) {
-  try {
-    const product = await productsApi.getById(productID);
-    return product[0];
   } catch (error) {
     logger.info(error);
   }

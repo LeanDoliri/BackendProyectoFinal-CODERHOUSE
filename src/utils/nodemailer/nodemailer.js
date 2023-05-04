@@ -43,4 +43,4 @@ export function sendNewPurchaseEmail(client, purchase) {
     };
   
     transporter.sendMail(mailOptions);
-  }
+}

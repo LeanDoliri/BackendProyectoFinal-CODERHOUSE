@@ -38,11 +38,12 @@ export default async function configurarSocket(socket) {
         productInCar.qty += 1;
         await cartApi.update(cart._id, { items: cart.items });
 
-        socket.emit("addedProduct", product);
+        socket.emit("addedProduct");
       } else {
         cart.items.push({...product._doc, qty: 1});
         await cartApi.update(cart._id, { items: cart.items });
-        socket.emit("addedProduct", productWithQty);
+
+        socket.emit("addedProduct");
       }
     } catch (error) {
       logger.info(error);

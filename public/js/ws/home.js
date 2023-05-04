@@ -20,6 +20,7 @@ function btsAddToCart() {
         userEmail: userEmail,
         productID: e.target.id,
       };
+      
       await socket.emit("addProduct", addingProduct);
     });
   }
