@@ -9,6 +9,7 @@ import { Server as Socket } from "socket.io";
 
 import productsWs from "./routes/ws/home.js"
 import cartWs from "./routes/ws/cart.js"
+import chatWs from "./routes/ws/chat.js"
 
 import config from "./config/config.js";
 import authWebRouter from "./routes/auth.js";
@@ -16,6 +17,7 @@ import homeWebRouter from "./routes/home.js";
 import profileWebRouter from "./routes/profile.js";
 import cartWebRouter from "./routes/cart.js";
 import adimnWebRouter from "./routes/admin.js";
+import chatWebRouter from "./routes/chat.js";
 
 function createServer() {
     const app = express();
@@ -25,6 +27,7 @@ function createServer() {
     io.on("connection", async (socket) => {
       productsWs(socket);
       cartWs(socket);
+      chatWs(socket);
     });
   
     app.use(express.json());
@@ -57,6 +60,7 @@ function createServer() {
     app.use(homeWebRouter);
     app.use(cartWebRouter);
     app.use(profileWebRouter);
+    app.use(chatWebRouter);
     app.use(adimnWebRouter);
   
     return {

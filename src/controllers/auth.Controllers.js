@@ -3,10 +3,14 @@ import moment from "moment";
 import { generateHashPassword } from "../utils/bcrypt/bcrypt.js";
 import { sendNewUserEmail } from "../utils/nodemailer/nodemailer.js";
 
+import logger from "../config/winston.js";
+
 import CartDAOMongoDB from "../models/dao/Cart.DAO.js";
+import MessagesDAOMongoDB from "../models/dao/Messages.DAO.js";
 import UserDAOMongoDB from "../models/dao/User.DAO.js";
 
 const cartApi = new CartDAOMongoDB();
+const messagesApi = new MessagesDAOMongoDB();
 const usersApi = new UserDAOMongoDB();
 
 export const getLogin = async (req, res) => {
@@ -52,13 +56,17 @@ export const postSignin = async (req, res) => {
             date: moment().format('DD/MM/YYYY, HH:mm:ss'),
             items: [],
         };
+        const chat = {
+            email: email,
+            messages: [],
+        }
 
-        await usersApi.save(newUser).then((res) => {
-            cartApi.save(cart);
-            sendNewUserEmail(newUser);
-        });
+        await usersApi.save(newUser);
+        await cartApi.save(cart);
+        await messagesApi.save(chat);
+
+        sendNewUserEmail(newUser);
 
         res.redirect("/login");
     }
 }
-

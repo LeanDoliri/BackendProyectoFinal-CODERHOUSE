@@ -1,0 +1,43 @@
+<%- include('templetes/head', {tituloWeb:'Chat'}) %>
+
+    <body>
+        <div class="container my-3">
+            <div class="jumbotron">
+                <header>
+                    <%- include('templetes/navbar') %>
+                </header>
+                <div class="containger-fluid alert-primary mt-3 mb-3">
+                    <div class="p-3">
+                        <h1>Chat</h1>
+                    </div>
+                    <div class="row container justify-content-center py-3" id="cartItems">
+                        <div class="col-8 p-0">
+                            <ul class="list-group list-group-flush rounded" id="chat">
+                                <li class="list-group-item d-flex justify-content-center">
+                                    <div class="spinner-border text-primary m-3" role="status">
+                                        <span class="visually-hidden"></span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <form id="sendMessage" submit="sendMessage" autocomplete="off" class="d-flex align-items-center my-3">
+                                <input id="bodyMessage" class="form-control" type="text" name="bodyMessage" required placeholder="...">
+                                <button class="btn btn-success mx-1">Enviar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+            integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD"
+            crossorigin="anonymous"></script>
+        <script>
+            const userEmail = '<%= user.email %>';
+        </script>
+        <script src="js/ws/chat.js"></script>
+    </body>
+
+    </html>
