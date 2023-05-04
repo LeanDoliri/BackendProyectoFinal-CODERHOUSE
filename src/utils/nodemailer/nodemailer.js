@@ -31,7 +31,7 @@ export function sendNewUserEmail(client) {
 }
 
 export function sendNewPurchaseEmail(client, purchase) {
-    const products = purchase.items.map((item) => item.product);
+    const products = purchase.items.map(item => `${item.product} x ${item.qty}`);
     const productsMessage = products.join(", <br>");
 
     const mailOptions = {
@@ -39,7 +39,10 @@ export function sendNewPurchaseEmail(client, purchase) {
       to: authUser,
       subject: `Nuevo pedido de ${client.nombre}`,
       html: `<h1>Nuevo pedido de ${client.nombre}</h1>
-          <p><strong>Productos: </strong> ${productsMessage}</p>`,
+            <p><strong>Fecha del pedido: </strong> ${purchase.date}</p>
+            <p><strong>Dirección de entrega: </strong> ${purchase.adress}</p>
+            <p><strong>Productos: </strong></p> 
+            <p>${productsMessage}</p>`,
     };
   
     transporter.sendMail(mailOptions);

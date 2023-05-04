@@ -1,16 +1,16 @@
 import express from "express";
+import moment from "moment";
 import { Server as HttpServer } from "http";
 import { Server as Socket } from "socket.io";
 
-import ProductsDAOMongoDB from "../../models/dao/Products.DAO.js";
+import OrdersDAOMongoDB from "../../models/dao/Orders.DAO.js";
 import CartDAOMongoDB from "../../models/dao/Cart.DAO.js";
 import UserDAOMongoDB from "../../models/dao/User.DAO.js";
 
-// import { sendAdminWppMessage, sendClientWppMessage } from "../../utils/twilio/twilio.js";
 import { sendNewPurchaseEmail } from "../../utils/nodemailer/nodemailer.js";
 import logger from "../../config/winston.js";
 
-const productsApi = new ProductsDAOMongoDB();
+const ordersApi = new OrdersDAOMongoDB();
 const cartApi = new CartDAOMongoDB();
 const usersApi = new UserDAOMongoDB();
 
@@ -24,9 +24,8 @@ export default async function configurarSocket(socket) {
   socket.on("getItemsCart", async (userEmail) => {
     try {
       const cart = await getCart(userEmail);
-      const cartItems = cart.items;
 
-      socket.emit("itemsCart", cartItems);
+      socket.emit("itemsCart", cart.items);
     } catch (error) {
       logger.info(error);
     }
@@ -49,12 +48,19 @@ export default async function configurarSocket(socket) {
   socket.on("makePruchase", async (userEmail) => {
     try {
       const cart = await getCart(userEmail);
+      const client = await getClient(userEmail);
+      const ordersDB = await ordersApi.getAll();
+
       const purchase = {
+        state: 'generada',
+        numOfOrder: ordersDB.length + 1,
         email: userEmail,
+        adress: client.direccion,
+        date: moment().format('DD/MM/YYYY, HH:mm:ss'),
         items: cart.items,
       };
-      const client = await getClient(userEmail);
 
+      await ordersApi.save(purchase);
       sendNewPurchaseEmail(client, purchase);
 
       await cartApi.update(cart._id, {items: []});
