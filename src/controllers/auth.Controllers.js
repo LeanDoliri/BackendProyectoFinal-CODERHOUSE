@@ -3,8 +3,6 @@ import moment from "moment";
 import { generateHashPassword } from "../utils/bcrypt/bcrypt.js";
 import { sendNewUserEmail } from "../utils/nodemailer/nodemailer.js";
 
-import logger from "../config/winston.js";
-
 import CartDAOMongoDB from "../models/dao/Cart.DAO.js";
 import MessagesDAOMongoDB from "../models/dao/Messages.DAO.js";
 import UserDAOMongoDB from "../models/dao/User.DAO.js";
@@ -37,8 +35,8 @@ export const getSignin = async (req, res) => {
 
 export const postSignin = async (req, res) => {
     const { nombre, direccion, email, password } = req.body;
-    const usersDb = await usersApi.getAll();
-    const userExist = usersDb.find((usr) => usr.email == email);
+    const usersDB = await usersApi.getAll();
+    const userExist = usersDB.find(usr => usr.email == email);
 
     if (userExist) {
         res.render("auth/signin-error.ejs");

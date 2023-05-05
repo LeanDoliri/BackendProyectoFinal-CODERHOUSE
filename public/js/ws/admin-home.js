@@ -8,23 +8,7 @@ socket.on("products", (products) => {
   const container = document.getElementById("products");
   const html = makeProductsTable(products);
   container.innerHTML = html;
-  btsAddToCart();
 });
-
-// agregar producto al carrito
-function btsAddToCart() {
-  const btnAddToCartList = document.getElementsByClassName("btnAddToCart");
-  for (let i = 0; i < btnAddToCartList.length; i++) {
-    btnAddToCartList[i].addEventListener("click", async (e) => {
-      const addingProduct = {
-        userEmail: userEmail,
-        productID: e.target.id,
-      };
-      
-      await socket.emit("addProduct", addingProduct);
-    });
-  }
-}
 
 // producto agregado
 socket.on("addedProduct", () =>{
@@ -41,9 +25,9 @@ function makeProductsTable(items) {
                 <div class="card-body">
                   <h3 class="card-title">${item.product}</h3>
                   <h5 class="card-title">$ ${item.price}</h5>
-                  <button type="button" class="btn btn-primary btnAddToCart" id='${item._id}'>
+                  <a href="/admin/update/${item._id}"><button type="button" class="btn btn-primary btnAddToCart" id='${item._id}'>
                     Update
-                  </button>
+                  </button></a>
                 </div>
               </div> `;
     })
