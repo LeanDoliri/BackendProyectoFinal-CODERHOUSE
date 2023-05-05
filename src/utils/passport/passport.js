@@ -56,7 +56,7 @@ export const authenticate = (req, res, next) => {
         return next(err);
       }
       if (user.role === "admin") {
-        return res.redirect("/admin-home");
+        return res.redirect("/admin/home");
       }
       return res.redirect("/home");
     });

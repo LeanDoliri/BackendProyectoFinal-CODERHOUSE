@@ -61,7 +61,7 @@ function createServer() {
     app.use(cartWebRouter);
     app.use(profileWebRouter);
     app.use(chatWebRouter);
-    app.use(adimnWebRouter);
+    app.use('/admin', adimnWebRouter);
   
     return {
       listen: (port) =>
