@@ -49,6 +49,26 @@ export const getAddProduct = async (req, res) => {
     }
 }
 
+export const postAddProduct = async (req, res) => {
+    const { product, category, price, description, thumbnail } = req.body;
+
+    if (!req.session.passport?.user) {
+        res.render("auth/login.ejs");
+    } else {
+        const newProduct = {
+            product,
+            category,
+            price,
+            description,
+            thumbnail,
+        }
+        
+        await productsApi.save(newProduct);
+
+        res.redirect("/admin/home");
+    }
+}
+
 export const getAdminChat = async (req, res) => {
     if (!req.session.passport?.user) {
         res.render("auth/login.ejs");

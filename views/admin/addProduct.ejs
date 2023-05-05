@@ -1,4 +1,4 @@
-<%- include('templetes/head', {tituloWeb:'Mi perfil'}) %>
+<%- include('templetes/head', {tituloWeb:'Agregar'}) %>
 
     <body>
         <div class="container my-3">
@@ -10,8 +10,25 @@
                     <div class="p-3">
                         <h1>Agregar Producto</h1>
                     </div>
-                    <div class="row container justify-content-center py-3">
-                    </div>
+                    <form class="form mx-3" action="" method="post" role="form" autocomplete="off">
+                        <div>
+                            <label for="product">Producto</label>
+                            <input id="product" class="form-control" type="text" name="product" required />
+                            <br />
+                            <label for="category">Categoría</label>
+                            <input id="category" class="form-control" type="text" name="category" required />
+                            <br />
+                            <label for="price">Precio</label>
+                            <input id="price" class="form-control" type="number" name="price" required />
+                            <br />
+                            <label for="description">Descripción</label>
+                            <input id="description" class="form-control" type="text" name="description" required />
+                            <br />
+                            <label for="thumbnail">Imágen</label>
+                            <input id="thumbnail" class="form-control" type="text" name="thumbnail" required />
+                        </div>
+                        <input class="btn btn-success my-3" type="submit" value="Agregar" />
+                    </form>
                 </div>
             </div>
         </div>
