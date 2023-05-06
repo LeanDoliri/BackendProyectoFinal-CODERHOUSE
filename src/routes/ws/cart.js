@@ -54,7 +54,7 @@ export default async function configurarSocket(socket) {
       const purchase = {
         numOfOrder: ordersDB.length + 1,
         email: userEmail,
-        adress: client.direccion,
+        adress: client.adress,
         date: moment().format('DD/MM/YYYY, HH:mm:ss'),
         items: cart.items,
       };

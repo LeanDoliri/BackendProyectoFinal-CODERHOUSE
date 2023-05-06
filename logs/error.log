@@ -99,3 +99,4 @@
 {"level":"error","message":{"codigo":500,"descripcion":"Error getAll()","detalle":{}}}
 {"level":"error","message":{"codigo":500,"descripcion":"Error getAll()","detalle":{}}}
 {"level":"error","message":{"codigo":500,"descripcion":"Error getAll()","detalle":{}}}
+{"level":"error","message":{"codigo":500,"descripcion":"Error save()","detalle":{"_message":"orders validation failed","errors":{"adress":{"kind":"required","message":"Path `adress` is required.","name":"ValidatorError","path":"adress","properties":{"message":"Path `adress` is required.","path":"adress","type":"required"}}},"message":"orders validation failed: adress: Path `adress` is required.","name":"ValidationError"}}}

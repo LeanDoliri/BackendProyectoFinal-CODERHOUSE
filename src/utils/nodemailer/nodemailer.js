@@ -19,11 +19,11 @@ export function sendNewUserEmail(client) {
     from: "Servidor Node.js",
     to: authUser,
     subject: "Nuevo registro",
-    html: `<h1>${client.nombre} se ha registrado.</h1>
-        <p>Nombre: ${client.nombre}</p>
-        <p>Direccion: ${client.direccion}</p>
-        <p>Edad: ${client.edad}</p>
-        <p>Telefono: ${client.telefono}</p>
+    html: `<h1>${client.name} se ha registrado.</h1>
+        <p>Nombre: ${client.name}</p>
+        <p>Direccion: ${client.adress}</p>
+        <p>Edad: ${client.age}</p>
+        <p>Telefono: ${client.phone}</p>
         <p>Email: ${client.email}</p>`,
   };
 
@@ -37,8 +37,8 @@ export function sendNewPurchaseEmail(client, purchase) {
     const mailOptions = {
       from: "Servidor Node.js",
       to: authUser,
-      subject: `Nuevo pedido de ${client.nombre}`,
-      html: `<h1>Nuevo pedido de ${client.nombre}</h1>
+      subject: `Nuevo pedido de ${client.name}`,
+      html: `<h1>Nuevo pedido de ${client.name}</h1>
             <p><strong>Fecha del pedido: </strong> ${purchase.date}</p>
             <p><strong>Dirección de entrega: </strong> ${purchase.adress}</p>
             <p><strong>Productos: </strong></p> 

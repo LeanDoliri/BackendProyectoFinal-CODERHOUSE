@@ -23,6 +23,6 @@ authWebRouter.get("/login-error", getLoginError);
 /*----- signin -----*/
 authWebRouter.get("/signin", getSignin);
 
-authWebRouter.post("/signin", uploader.single("foto"), postSignin);
+authWebRouter.post("/signin", uploader.single("avatar"), postSignin);
 
 export default authWebRouter;

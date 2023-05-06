@@ -20,7 +20,7 @@ export const getLogout = async (req, res) => {
         res.redirect("login");
     } else {
         res.render("auth/logout.ejs", {
-            nombre: req.session.passport?.user.nombre,
+            name: req.session.passport?.user.name,
         });
     }
 }
@@ -34,7 +34,7 @@ export const getSignin = async (req, res) => {
 }
 
 export const postSignin = async (req, res) => {
-    const { nombre, direccion, email, password } = req.body;
+    const { name, age, phone, adress, email, password } = req.body;
     const usersDB = await usersApi.getAll();
     const userExist = usersDB.find(usr => usr.email == email);
 
@@ -42,15 +42,17 @@ export const postSignin = async (req, res) => {
         res.render("auth/signin-error.ejs");
     } else {
         const newUser = {
-            nombre,
-            direccion,
-            foto: req.body.fileName,
+            name,
+            age,
+            phone,
+            adress,
+            avatar: req.body.fileName,
             email,
             password: await generateHashPassword(password),
         };
         const cart = {
             email: email,
-            adress: direccion,
+            adress: adress,
             date: moment().format('DD/MM/YYYY, HH:mm:ss'),
             items: [],
         };
