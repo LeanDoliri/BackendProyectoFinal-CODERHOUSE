@@ -1,4 +1,4 @@
-# BackendProyectoFinal-CODERHOUSE
+# Backend ProyectoFinal - CODERHOUSE
 Proyecto final del curso de Programación Backend en CODERHOUSE
 
 ### Link:
