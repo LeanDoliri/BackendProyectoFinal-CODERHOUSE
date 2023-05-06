@@ -1,7 +1,7 @@
 const socket = io();
 
 // pedido de productos
-socket.emit("getProducts");
+socket.emit("getProductsAdmin");
 
 // carga de productos
 socket.on("products", (products) => {
@@ -9,13 +9,6 @@ socket.on("products", (products) => {
   const html = makeProductsTable(products);
   container.innerHTML = html;
 });
-
-// producto agregado
-socket.on("addedProduct", () =>{
-  const toastLiveExample = document.getElementById("liveToast");
-  const toast = new bootstrap.Toast(toastLiveExample);
-  toast.show();
-})
 
 function makeProductsTable(items) {
   const html = items
